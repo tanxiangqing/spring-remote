@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  org.storevm.framework.remote.boot.HttpClientAutoConfiguration,\
+  org.storevm.framework.remote.boot.Oauth2AutoConfiguration
+org.springframework.context.ApplicationListener=\
+  org.storevm.framework.remote.boot.RegisterRemoteInvokerApplicationListener

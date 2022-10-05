@@ -37,6 +37,11 @@
 				<artifactId>commons-io</artifactId>
 				<version>2.11.0</version>
 			</dependency>
+			<dependency>
+				<groupId>org.storevm.framework</groupId>
+				<artifactId>spring-remote</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -79,7 +84,7 @@
 
 	<modules>
 		<module>remote</module>
-		<!--<module>starter</module>-->
+		<module>starter</module>
 	</modules>
 
 </project>
