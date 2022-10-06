@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -10,18 +8,17 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
+	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.storevm.framework</groupId>
 	<artifactId>spring-remote-parent</artifactId>
+	<name>StoreVM Java Application Framework Parent POM</name>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-
-	<name>${project.artifactId}</name>
-	<description>StoreVM Java Application Framework Parent POM</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+		<java.compiler.version>1.8</java.compiler.version>
 		<jwt.version>4.0.0</jwt.version>
 	</properties>
 
@@ -51,22 +48,77 @@
 	</dependencyManagement>
 
 	<build>
-		<finalName>${project.artifactId}-${project.version}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.2.2</version>
+				<configuration>
+					<archive>
+						<manifestFile>META-INF/MANIFEST.MF</manifestFile>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<compilerVersion>${java.compiler.version}</compilerVersion>
+					<source>${java.compiler.version}</source>
+					<target>${java.compiler.version}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.2</version>
+				<configuration>
+					<skip>true</skip>
+					<testFailureIgnore>true</testFailureIgnore>
+					<includes>
+						<include>**/*Test*.java</include>
+					</includes>
+					<excludes>
+						<exclude>**/AbstractSpringBootBaseTest.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.xolstice.maven.plugins</groupId>
+				<artifactId>protobuf-maven-plugin</artifactId>
+				<version>0.6.1</version>
+				<configuration>
+				  <protocExecutable>protoc</protocExecutable>
+				  <outputDirectory>${project.build.sourceDirectory}</outputDirectory>
+				  <clearOutputDirectory>false</clearOutputDirectory>
+				</configuration>
+				<executions>
+				  <execution>
+					<goals>
+					  <goal>compile</goal>
+					  <goal>test-compile</goal>
+					</goals>
+				  </execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
-	<profiles>
-		<profile>
-			<id>dev</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-				<jdk>${java.version}</jdk>
-			</activation>
-			<properties>
-				<maven.compiler.source>${java.version}</maven.compiler.source>
-				<maven.compiler.target>${java.version}</maven.compiler.target>
-				<maven.compiler.compilerVersion>${java.version}</maven.compiler.compilerVersion>
-			</properties>
-		</profile>
-	</profiles>
+	
 	<repositories>
 		<repository>
 			<id>aliyun-repos</id>

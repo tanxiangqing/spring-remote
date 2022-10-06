@@ -45,6 +45,60 @@
     </dependencies>
 
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>2.6.2</version>
+				<!--
+				<configuration>
+					<layout>ZIP</layout>
+					<includes>
+						<include>
+							<groupId>com.lakala.zf.showcase</groupId>
+							<artifactId>showcase-api</artifactId>
+						</include>
+						<include>
+							<groupId>com.lakala.zf.showcase</groupId>
+							<artifactId>showcase-domain</artifactId>
+						</include>
+						<include>
+							<groupId>com.lakala.zf.showcase</groupId>
+							<artifactId>showcase-infrastructure</artifactId>
+						</include>
+					</includes>
+				</configuration>
+				-->
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>1.2.2</version>
+				<configuration>
+					<imageName>${project.artifactId}</imageName>
+					<imageTags>
+						<imageTag>${project.version}</imageTag>
+					</imageTags>
+					<baseImage>java:8u111-jdk</baseImage>
+					<workdir>/ROOT</workdir>
+					<entryPoint>["java", "-jar", "./${project.build.finalName}.jar"]</entryPoint>
+					<resources>
+						<resource>
+							<targetPath>/ROOT</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
+		</plugins>
 		<resources>
 			<!-- standard Maven folder -->
 			<resource>
