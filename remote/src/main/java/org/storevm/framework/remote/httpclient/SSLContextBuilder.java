@@ -1,17 +1,7 @@
-/*
- * @(#)SSLContextBuilder.java 2019/09/17
- *
- * Copyright (c) 2004-2019 Lakala, Inc. Wuxing Road, building 3, Lane 727, Shanghai, China All Rights Reserved.
- *
- * This software is the confidential and proprietary information of Lakala, Inc. You shall not disclose such
- * Confidential Information and shall use it only in accordance with the terms of the license agreement you entered into
- * with Lakala.
- */
 package org.storevm.framework.remote.httpclient;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.storevm.framework.remote.config.SslClientConfig;
 
 import javax.net.ssl.*;
@@ -23,15 +13,9 @@ import java.security.cert.CertificateException;
 
 /**
  * @author Jack
- * @version 1.0.0
- * @date 2019/09/17
  */
+@Slf4j
 public class SSLContextBuilder {
-    /**
-     * logger
-     */
-    private static final Logger logger = LoggerFactory.getLogger(SSLContextBuilder.class);
-
     /**
      * SSL配置项
      */
@@ -55,7 +39,6 @@ public class SSLContextBuilder {
         try {
             KeyManager[] keymanagers = null;
             TrustManager[] trustmanagers = null;
-            // 如果密钥文件不为NULL且存在则创建密钥管理器对象
             if (config.getKeystoreFile() != null && config.getKeystoreFile().exists()) {
                 KeyStore keystore = createKeyStore(config.getKeystoreFile(), config.getKeystorePassword(), "PKCS12");
                 keymanagers = createKeyManagers(keystore, config.getKeystorePassword());
@@ -69,27 +52,17 @@ public class SSLContextBuilder {
             sslcontext.init(keymanagers, trustmanagers, null);
             return sslcontext;
         } catch (NoSuchAlgorithmException e) {
-            logger.error("创建SSL上下文时发生异常", e);
+            log.error("Unsupported algorithm exception", e);
             throw new HttpsInitializationError("Unsupported algorithm exception: " + e.getMessage());
         } catch (KeyStoreException e) {
-            logger.error("创建SSL上下文时发生异常", e);
+            log.error("Keystore exception", e);
             throw new HttpsInitializationError("Keystore exception: " + e.getMessage());
         } catch (GeneralSecurityException e) {
-            logger.error("创建SSL上下文时发生异常", e);
+            log.error("Key management exception", e);
             throw new HttpsInitializationError("Key management exception: " + e.getMessage());
         }
     }
 
-    /**
-     * 创建密钥管理器对象
-     *
-     * @param keystore 密钥库文件
-     * @param password 密钥库密码
-     * @return
-     * @throws KeyStoreException
-     * @throws NoSuchAlgorithmException
-     * @throws UnrecoverableKeyException
-     */
     private KeyManager[] createKeyManagers(final KeyStore keystore, final String password)
             throws KeyStoreException, NoSuchAlgorithmException, UnrecoverableKeyException {
         if (keystore == null) {
@@ -100,14 +73,6 @@ public class SSLContextBuilder {
         return kmfactory.getKeyManagers();
     }
 
-    /**
-     * 创建信任证书库管理器对象数组
-     *
-     * @param keystore 信任证书库
-     * @return
-     * @throws KeyStoreException
-     * @throws NoSuchAlgorithmException
-     */
     private TrustManager[] createTrustManagers(final KeyStore keystore)
             throws KeyStoreException, NoSuchAlgorithmException {
         if (keystore == null) {
@@ -124,22 +89,13 @@ public class SSLContextBuilder {
         return trustmanagers;
     }
 
-    /**
-     * 创建密钥库对象
-     *
-     * @param file
-     * @param password
-     * @param type
-     * @return
-     */
     private KeyStore createKeyStore(final File file, final String password, String type) {
         try (InputStream is = FileUtils.openInputStream(file)) {
-            logger.debug("file:{}, password:{}, type:{}", file, password, type);
             KeyStore keystore = KeyStore.getInstance(type);
             keystore.load(is, password != null ? password.toCharArray() : null);
             return keystore;
         } catch (KeyStoreException | IOException | CertificateException | NoSuchAlgorithmException ex) {
-            logger.error("加载秘钥库时发生异常, file={}", ex, file);
+            log.error("load keystore occurred exception", ex);
         }
         return (KeyStore) null;
     }

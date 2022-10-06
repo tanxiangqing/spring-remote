@@ -19,7 +19,7 @@ import org.storevm.framework.remote.enums.CallMethod;
 import org.storevm.framework.remote.enums.PartType;
 import org.storevm.framework.remote.handler.HttpInvokeHandler;
 import org.storevm.framework.remote.handler.HttpInvokeHandlerFactory;
-import org.storevm.framework.remote.httpclient.HttpClientTemplate;
+import org.storevm.framework.remote.httpclient.HttpClientConfigurator;
 import org.storevm.framework.remote.utils.JsonUtils;
 
 import java.io.File;
@@ -57,7 +57,7 @@ public class RemoteInvoker {
         resolveParametersAnnotation(resolver);
     }
 
-    public CallResult invoke(HttpClientTemplate template) throws URISyntaxException {
+    public CallResult invoke(HttpClientConfigurator template) throws URISyntaxException {
         HttpInvokeHandler handler = HttpInvokeHandlerFactory.getHandler(template, this.callMethod);
         CallResult result = handler.invoke(this.uri.build(), this.headers, this.entity);
         return result;

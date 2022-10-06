@@ -11,7 +11,7 @@ import org.storevm.framework.remote.config.OauthClientConfig;
 import org.storevm.framework.remote.config.OauthConfig;
 import org.storevm.framework.remote.config.OauthServerConfig;
 import org.storevm.framework.remote.core.OauthHandlerBuilder;
-import org.storevm.framework.remote.httpclient.HttpClientTemplate;
+import org.storevm.framework.remote.httpclient.HttpClientConfigurator;
 
 @Configuration
 @EnableConfigurationProperties(OauthConfigProperties.class)
@@ -37,7 +37,7 @@ public class Oauth2AutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public OauthConfig oauthConfig(HttpClientTemplate template) {
+    public OauthConfig oauthConfig(HttpClientConfigurator template) {
         OauthConfig config = toOauthConfig();
         template.setOauthConfig(config);
         return config;

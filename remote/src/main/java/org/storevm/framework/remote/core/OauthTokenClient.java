@@ -10,7 +10,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.storevm.framework.remote.config.OauthConfig;
 import org.storevm.framework.remote.enums.GrantType;
-import org.storevm.framework.remote.httpclient.HttpClientTemplate;
+import org.storevm.framework.remote.httpclient.HttpClientConfigurator;
 import org.storevm.framework.remote.utils.JsonUtils;
 
 import java.io.IOException;
@@ -21,9 +21,9 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public class OauthTokenClient {
     private OauthConfig config;
-    private HttpClientTemplate template;
+    private HttpClientConfigurator template;
 
-    public OauthTokenClient(HttpClientTemplate template) {
+    public OauthTokenClient(HttpClientConfigurator template) {
         this.template = template;
         this.config = this.template.getOauthConfig();
     }

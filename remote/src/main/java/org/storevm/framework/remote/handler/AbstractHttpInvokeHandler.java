@@ -7,21 +7,21 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.storevm.framework.remote.core.CallResult;
 import org.storevm.framework.remote.exception.RemoteException;
-import org.storevm.framework.remote.httpclient.HttpClientTemplate;
+import org.storevm.framework.remote.httpclient.HttpClientConfigurator;
 
 import java.io.IOException;
 import java.util.List;
 
 @Slf4j
 public abstract class AbstractHttpInvokeHandler implements HttpInvokeHandler {
-    protected HttpClientTemplate template;
+    protected HttpClientConfigurator template;
 
     /**
      * constructor
      *
      * @param template
      */
-    public AbstractHttpInvokeHandler(HttpClientTemplate template) {
+    public AbstractHttpInvokeHandler(HttpClientConfigurator template) {
         this.template = template;
     }
 

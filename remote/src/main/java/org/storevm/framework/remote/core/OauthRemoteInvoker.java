@@ -4,7 +4,7 @@ import org.apache.http.message.BasicHeader;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.storevm.framework.remote.annotation.EnabledOAuth;
 import org.storevm.framework.remote.config.OauthServerConfig;
-import org.storevm.framework.remote.httpclient.HttpClientTemplate;
+import org.storevm.framework.remote.httpclient.HttpClientConfigurator;
 
 import java.net.URISyntaxException;
 
@@ -35,7 +35,7 @@ public class OauthRemoteInvoker extends RemoteInvoker {
     }
 
     @Override
-    public CallResult invoke(HttpClientTemplate template) throws URISyntaxException {
+    public CallResult invoke(HttpClientConfigurator template) throws URISyntaxException {
         if (this.token == null || this.token.isTimeout()) {
             OauthRequest request = toOauthRequest(template);
             OauthTokenClient client = new OauthTokenClient(template);
@@ -50,7 +50,7 @@ public class OauthRemoteInvoker extends RemoteInvoker {
         return super.invoke(template);
     }
 
-    private OauthRequest toOauthRequest(HttpClientTemplate template) {
+    private OauthRequest toOauthRequest(HttpClientConfigurator template) {
         OauthRequest request = new OauthRequest();
         if (template.getOauthConfig() != null && template.getOauthConfig().getClient() != null) {
             request.setAudience(template.getOauthConfig().getClient().getClientId());

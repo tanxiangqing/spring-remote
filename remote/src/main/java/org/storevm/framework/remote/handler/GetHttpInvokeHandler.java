@@ -5,7 +5,7 @@ import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.storevm.framework.remote.core.CallResult;
-import org.storevm.framework.remote.httpclient.HttpClientTemplate;
+import org.storevm.framework.remote.httpclient.HttpClientConfigurator;
 
 import java.net.URI;
 import java.util.List;
@@ -17,7 +17,7 @@ public class GetHttpInvokeHandler extends AbstractHttpInvokeHandler {
      *
      * @param template
      */
-    public GetHttpInvokeHandler(HttpClientTemplate template) {
+    public GetHttpInvokeHandler(HttpClientConfigurator template) {
         super(template);
     }
 

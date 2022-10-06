@@ -5,14 +5,14 @@ import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpPut;
 import org.storevm.framework.remote.core.CallResult;
-import org.storevm.framework.remote.httpclient.HttpClientTemplate;
+import org.storevm.framework.remote.httpclient.HttpClientConfigurator;
 
 import java.net.URI;
 import java.util.List;
 
 @Slf4j
 public class PutHttpInvokeHandler extends AbstractHttpInvokeHandler {
-    public PutHttpInvokeHandler(HttpClientTemplate template) {
+    public PutHttpInvokeHandler(HttpClientConfigurator template) {
         super(template);
     }
 

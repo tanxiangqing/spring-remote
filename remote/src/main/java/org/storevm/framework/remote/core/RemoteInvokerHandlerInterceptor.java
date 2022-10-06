@@ -7,18 +7,18 @@ import org.springframework.cglib.proxy.MethodProxy;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import org.storevm.framework.remote.annotation.EnabledOAuth;
-import org.storevm.framework.remote.httpclient.HttpClientTemplate;
+import org.storevm.framework.remote.httpclient.HttpClientConfigurator;
 
 import java.lang.reflect.Method;
 
 @Slf4j
 @Component
 public class RemoteInvokerHandlerInterceptor implements MethodInterceptor {
-    private final HttpClientTemplate template;
+    private final HttpClientConfigurator template;
     private final SpringBeanExpressionResolver resolver;
 
     @Autowired
-    public RemoteInvokerHandlerInterceptor(SpringBeanExpressionResolver resolver, HttpClientTemplate template) {
+    public RemoteInvokerHandlerInterceptor(SpringBeanExpressionResolver resolver, HttpClientConfigurator template) {
         this.resolver = resolver;
         this.template = template;
     }

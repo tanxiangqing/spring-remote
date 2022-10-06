@@ -3,10 +3,10 @@ package org.storevm.framework.remote.handler;
 import org.apache.http.HttpStatus;
 import org.storevm.framework.remote.enums.CallMethod;
 import org.storevm.framework.remote.exception.RemoteException;
-import org.storevm.framework.remote.httpclient.HttpClientTemplate;
+import org.storevm.framework.remote.httpclient.HttpClientConfigurator;
 
 public class HttpInvokeHandlerFactory {
-    public static HttpInvokeHandler getHandler(HttpClientTemplate template, CallMethod method) {
+    public static HttpInvokeHandler getHandler(HttpClientConfigurator template, CallMethod method) {
         if (method == CallMethod.POST) {
             return new PostHttpInvokeHandler(template);
         } else if (method == CallMethod.GET) {

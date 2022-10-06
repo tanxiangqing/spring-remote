@@ -1,12 +1,3 @@
-/*
- * @(#)HttpClientAutoConfiguration.java 2019/09/16
- *
- * Copyright (c) 2004-2019 Lakala, Inc. Wuxing Road, building 3, Lane 727, Shanghai, China All Rights Reserved.
- *
- * This software is the confidential and proprietary information of Lakala, Inc. You shall not disclose such
- * Confidential Information and shall use it only in accordance with the terms of the license agreement you entered into
- * with Lakala.
- */
 package org.storevm.framework.remote.boot;
 
 import org.springframework.beans.BeanUtils;
@@ -22,15 +13,13 @@ import org.storevm.framework.remote.config.HttpClientConfig;
 import org.storevm.framework.remote.config.SslClientConfig;
 import org.storevm.framework.remote.core.SpringBeanExpressionResolver;
 import org.storevm.framework.remote.filter.HttpServletCompressFilter;
-import org.storevm.framework.remote.httpclient.HttpClientTemplate;
-import org.storevm.framework.remote.httpclient.HttpsClientTemplate;
+import org.storevm.framework.remote.httpclient.HttpClientConfigurator;
+import org.storevm.framework.remote.httpclient.HttpsClientConfigurator;
 
 import java.util.Arrays;
 
 /**
  * @author Jack
- * @version 1.0.0
- * @date 2019/09/16
  */
 @Configuration
 @EnableConfigurationProperties(HttpClientConfigProperties.class)
@@ -53,8 +42,8 @@ public class HttpClientAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public HttpClientTemplate httpClientTemplate(HttpClientConfig config) {
-        return new HttpsClientTemplate(config);
+    public HttpClientConfigurator httpClientConfigurator(HttpClientConfig config) {
+        return new HttpsClientConfigurator(config);
     }
 
     @Bean
