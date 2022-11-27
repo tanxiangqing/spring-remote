@@ -8,18 +8,16 @@ out
 .classpath
 .project
 .settings/
-.metadata
+
 gen/
 target/
-bin/
-RemoteSystemsTempFiles/
-Servers/
 local.properties
- 
+
 .DS_Store
 Thumbs.db
 
 *.log
+*.jar
 *.bak
 *.tem
 *.temp
@@ -27,10 +25,3 @@ Thumbs.db
 #.swp
 *.*~
 ~*.*
-
-logs/
-assembly/server/webapps/*
-assembly/server/temp/*
-assembly/*.jar
-assembly/core/*
-assembly/lib
